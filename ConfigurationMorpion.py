@@ -9,16 +9,16 @@ class ConfigurationMorpion(Configuration):
         self.grille = [[None for _ in range(3)] for _ in range(3)]
         
     def __repr__(self) -> str:
-        return  '\n'.join([str(i) for i in self.grille])
+        return '\n'.join([str(i) for i in self.grille]) + '\n'
         
     def __str__(self) -> str:
-        return  '\n'.join([str(i) for i in self.grille])
+        return '\n'.join([str(i) for i in self.grille]) + '\n'
 
 
     def prochainJoueur(self):
-        if self.historique == [] or self.historique[-1].get_joueur() == 2:
+        if self.historique == [] or self.getDernierCoup().get_joueur() == 2:
             return 1
-        elif self.historique[-1].get_joueur() == 1:
+        elif self.getDernierCoup().get_joueur() == 1:
             return 2   
         raise ValueError
 
@@ -27,7 +27,7 @@ class ConfigurationMorpion(Configuration):
         for i in range(3):
             for j in range(3):
                 if self.grille[i][j] == None:
-                    possibles.append(CoupMorpion(None, i,j))
+                    possibles.append(CoupMorpion(self.prochainJoueur(), i,j))
         return possibles
 
     def estFinale(self):
@@ -66,13 +66,13 @@ class ConfigurationMorpion(Configuration):
 
     def f1_geek(self):
         if self.estGagnant(1):
-            return 10
+            return 1
         
         elif self.estGagnant(2):
-            return -10
+            return -1
         
         else:
-            return 0 # Match nul    
+            return 0 # Match nul
         
     def lignesPotentielles(self, C, symbole):
         """

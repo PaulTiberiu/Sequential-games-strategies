@@ -27,3 +27,6 @@ class JeuSequentiel:
         """ Rend True si la configuration C est
         une configuration finale"""
         return C.estFinale()
+
+    def prochaine_configuration(self, C, coup):
+        raise NotImplementedError

@@ -48,7 +48,6 @@ class Morpion(JeuSequentiel):
         """
         Renvoie True si la configuration C est une configuration finale
         """
-        #' ' not in [cell for row in self.grille for cell in row]
         return C.estFinale()
     
     def estGagnant(self, C,  joueur):
@@ -65,16 +64,16 @@ class Morpion(JeuSequentiel):
 
         while not(self.estFinale(C)):
            
-           # joueur = 1
             coup = st.choisirProchainCoup(C)
-            self.joueLeCoup(C, coup)
 
+            print("Coup : ", coup)
+            self.joueLeCoup(C, coup)
             print(C)
 
             if self.estFinale(C) : break
         
-            #joueur = 2
             coup = st.choisirProchainCoup(C)
             self.joueLeCoup(C, coup)
 
+            print("Coup : ", coup)
             print(C)

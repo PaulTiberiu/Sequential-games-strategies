@@ -16,4 +16,4 @@ class CoupMorpion(Coup):
         return self.get_x(), self.get_y()
     
     def __repr__(self):
-        return f"({self.get_x()},{self.get_y()})"
+        return f"joueur {self.get_joueur()} : ({self.get_x()},{self.get_y()})"
