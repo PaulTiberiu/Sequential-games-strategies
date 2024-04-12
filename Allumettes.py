@@ -5,30 +5,24 @@ class Allumettes(JeuSequentiel):
     Represente le jeu des allumettes avec g groupes de m allumettes chacun.
     """
 
-    def __init__(self, m, g):
+    def __init__(self):
         super().__init__()
-        self.groupes = [m] * g
+
 
     def joueurCourant(self, C):
         """"
         Rend le joueur courant dans la configuration C
         """
-        pass
+        return C.prochainJoueur()
 
     def coupsPossibles(self, C):
         """
         Renvoie la liste des coups possibles dans la configuration C
         """
-        coups = []
-        for i, groupe in enumerate(self.groupes):
-            if groupe > 0:
-                # Pour chaque groupe restant, les coups possibles sont de retirer 1 a groupe jusqu'a 0
-                for j in range(1, groupe + 1):
-                    coups.append((i, j)) # (indice du groupe, nb d'allumettes a retirer)
-        return coups
+        return C.coupsPossibles()
     
     def f1(self, C):
-        pass
+        return C.f1()
 
     def joueLeCoup(self, C, coup):
         """
@@ -38,14 +32,14 @@ class Allumettes(JeuSequentiel):
         self.groupes[groupe] -= nb_allumettes
         return self.groupes
     
-    def estFini(self, C):
-        return all(groupe == 0 for groupe in self.groupes)
+    def estFinale(self, C):
+        return C.estFinale()    
+
+    def joueurCourant(self, C):
+        """"
+        Rend le joueur courant dans la configuration C
+        """
+        return C.prochainJoueur()
     
-
-    
-
-        
-        
-        
-
-
+    def prochaine_configuration(self, C, coup):
+        return C.prochaine_configuration(coup)
