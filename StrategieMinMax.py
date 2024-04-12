@@ -46,31 +46,53 @@ class StartegieMinMax(Strategie):
         meilleur_coup = None
 
 
-        if profondeur == 0 or coupsPossibles == []:
-            return C.f1_geek(), None
+        if profondeur == 0 or self.jeu.estFini(C):
+            return C.f1_geek(), None, profondeur
+
 
         if maximise:
             meilleur_score = float("-inf")
+            meilleur_profondeur = 0
+
             for coup in coupsPossibles:
                 config_suivante = self.jeu.prochaine_configuration(C, coup)
-                m_score, m_coup = self.minimax(config_suivante, profondeur - 1, False)
-                meilleur_score = max(meilleur_score, m_score)
+                m_score, m_coup, m_profondeur = self.minimax(config_suivante, profondeur - 1, False)
+                # meilleur_score = max(meilleur_score, m_score)
+                # if meilleur_score == m_score:
+                #     meilleur_coup = coup
                 if meilleur_score == m_score:
-                    meilleur_coup = coup
+                    meilleur_profondeur = max(meilleur_profondeur, m_profondeur)
+                    if meilleur_profondeur == m_profondeur:
+                        meilleur_coup = coup
+                        meilleur_score = m_score
+                else :
+                    meilleur_score = max(meilleur_score, m_score)
+                    if meilleur_score == m_score:
+                        meilleur_coup = coup
+                        meilleur_profondeur = m_profondeur
 
-            return meilleur_score, meilleur_coup
+
+            return meilleur_score, meilleur_coup, meilleur_profondeur
 
         else:
             meilleur_score = float("inf")
+            meilleur_profondeur = 0
 
             for coup in coupsPossibles:
                 config_suivante = self.jeu.prochaine_configuration(C, coup)
-                m_score, m_coup = self.minimax(config_suivante, profondeur - 1, True)
-                meilleur_score = min(meilleur_score, m_score)
+                m_score, m_coup, m_profondeur = self.minimax(config_suivante, profondeur - 1, True)
                 if meilleur_score == m_score:
-                    meilleur_coup = coup
+                    meilleur_profondeur = max(meilleur_profondeur, m_profondeur)
+                    if meilleur_profondeur == m_profondeur:
+                        meilleur_coup = coup
+                        meilleur_score = m_score
+                else :
+                    meilleur_score = min(meilleur_score, m_score)
+                    if meilleur_score == m_score:
+                        meilleur_coup = coup
+                        meilleur_profondeur = m_profondeur
 
-            return meilleur_score, meilleur_coup
+            return meilleur_score, meilleur_coup, meilleur_profondeur
 
 
 
@@ -78,7 +100,7 @@ class StartegieMinMax(Strategie):
     def choisirProchainCoup(self, C):
         #coup = self.prepare_negamax(C)
         maximise = self.jeu.joueurCourant(C) == 1
-        val, coup = self.minimax(C, 9, maximise)
+        _, coup, _ = self.minimax(C, 9, maximise)
         return coup
 
     # def choisirProchainCoup(self, C):

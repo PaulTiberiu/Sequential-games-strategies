@@ -12,13 +12,17 @@ def test_coups_1():
 
     cg = ConfigurationMorpion()
     cg.jouer_coup(CoupMorpion(1, 0, 0))
-    cg.jouer_coup(CoupMorpion(2, 1, 1))
-    cg.jouer_coup(CoupMorpion(1, 2, 1))
-    cg.jouer_coup(CoupMorpion(2, 0, 2))
-    cg.jouer_coup(CoupMorpion(1, 2, 2))
+
+    # cg.jouer_coup(CoupMorpion(2, 2, 2))
+    # cg.jouer_coup(CoupMorpion(1, 2, 0))
+
+    # cg.jouer_coup(CoupMorpion(2, 1, 1))
+    # cg.jouer_coup(CoupMorpion(1, 2, 1))
+    # cg.jouer_coup(CoupMorpion(2, 0, 2))
+    # cg.jouer_coup(CoupMorpion(1, 2, 2))
 
 
-    cg.jouer_coup(CoupMorpion(2, 0, 1))
+    # cg.jouer_coup(CoupMorpion(2, 0, 1))
 
 
     partie.jouerPartie(cg, StartegieMinMax, 10)
@@ -53,4 +57,4 @@ def test_coups_3():
     partie.jouerPartie(cg, StartegieMinMax, 10)
 
 
-test_coups_3()
+test_coups_1()
