@@ -250,7 +250,7 @@ def test_allu():
 
 def test_graph():
     init = [1, 2, 3]
-    ca = ConfigurationAllumettes(init, len(init))
+    #ca = ConfigurationAllumettes(init, len(init))
     # print("Configuration:", ca)
 
     group_graphs = Graph.create_group_graphs(init)
@@ -267,14 +267,14 @@ def test_graph():
         print("Le dictionnaire est vide.")
 
 
-    print("Valeur de E[Vertex(1)]:", group_graphs[0].E.get(Vertex(1).id))
+    print("Valeur de E[Vertex(1)]:", group_graphs[0].E.get(ConfigurationAllumettes([1], 1)))
 
     print("Valeur de E:", group_graphs[1].E)
 
 
-    print("Valeur de E[Vertex(2)]:", group_graphs[1].E.get(Vertex(2).id))
+    print("Valeur de E[Vertex(2)]:", group_graphs[1].E.get(ConfigurationAllumettes([2], 1)))
 
-    print("Valeur de E[Vertex(2)]:", group_graphs[1].E.get(Vertex(2).id))
+    print("Valeur de E[Vertex(2)]:", group_graphs[2].E.get(ConfigurationAllumettes([3], 1)))
 
 
 
