@@ -5,7 +5,7 @@
             "name": "Python Debugger: Python File",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/PartieMorpion.py"
+            "program": "${workspaceFolder}/PartieAllumettes.py"
         }
     ]
 } 

@@ -47,7 +47,7 @@ class StartegieMinMax(Strategie):
 
 
         if profondeur == 0 or self.jeu.estFini(C):
-            return C.f1_geek(), None, profondeur
+            return C.f1(), None, profondeur
 
 
         if maximise:

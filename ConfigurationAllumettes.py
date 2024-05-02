@@ -1,6 +1,7 @@
 from Configuration import Configuration
 from copy import deepcopy
 from CoupAllumettes import CoupAllumettes
+from Graph import Graph
 
 class ConfigurationAllumettes(Configuration):
 
@@ -28,6 +29,19 @@ class ConfigurationAllumettes(Configuration):
             return 2   
         raise ValueError
 
+    # def coupsPossibles(self):
+    #     """
+    #     Renvoie la liste des coups possibles dans la configuration C
+    #     """
+    #     coups = []
+    #     for i, groupe in enumerate(self.groupes):
+    #         if groupe > 0:
+    #             # Pour chaque groupe restant, les coups possibles sont de retirer 1 a groupe jusqu'a 0
+    #             for j in range(1, groupe + 1):
+    #                 coups.append(CoupAllumettes(self.prochainJoueur(), j, i)) # (indice du groupe, nb d'allumettes a retirer)
+
+    #     return coups
+
     def coupsPossibles(self):
         """
         Renvoie la liste des coups possibles dans la configuration C
@@ -37,12 +51,18 @@ class ConfigurationAllumettes(Configuration):
             if groupe > 0:
                 # Pour chaque groupe restant, les coups possibles sont de retirer 1 a groupe jusqu'a 0
                 for j in range(1, groupe + 1):
-                    coups.append(CoupAllumettes(self.prochainJoueur(), j, i)) # (indice du groupe, nb d'allumettes a retirer)
+                    if j <= 3:
+                        coups.append(CoupAllumettes(self.prochainJoueur(), j, i)) # (indice du groupe, nb d'allumettes a retirer)
 
         return coups
     
     def f1(self):
-        pass
+        g = Graph.create_graph(self)
+        
+        return g.grundyOf(self)
+    
+
+  
 
     def joueLeCoup(self, coup):
         """

@@ -28,9 +28,7 @@ class Allumettes(JeuSequentiel):
         """
         Renvoie la configuration obtenue apres que le joueur courant ait joue le coup dans la configuration C.
         """
-        groupe, nb_allumettes = coup
-        self.groupes[groupe] -= nb_allumettes
-        return self.groupes
+        return C.joueLeCoup(coup)
     
     def estFinale(self, C):
         return C.estFinale()    
@@ -43,3 +41,26 @@ class Allumettes(JeuSequentiel):
     
     def prochaine_configuration(self, C, coup):
         return C.prochaine_configuration(coup)
+    
+
+    def jouerPartie(self, C, strategie, *args):
+        st = strategie.__new__(strategie)
+        st.__init__(self, *args)
+
+        print("debut")
+
+        while not(self.estFinale(C)):
+           
+            coup = st.choisirProchainCoup(C)
+
+            print("Coup : ", coup)
+            self.joueLeCoup(C, coup)
+            print(C)
+
+            if self.estFinale(C) : break
+        
+            coup = st.choisirProchainCoup(C)
+            self.joueLeCoup(C, coup)
+
+            print("Coup : ", coup)
+            print(C)

@@ -64,7 +64,7 @@ class ConfigurationMorpion(Configuration):
         return cp
     
 
-    def f1_geek(self):
+    def f1(self):
         if self.estGagnant(1):
             return 1
         
