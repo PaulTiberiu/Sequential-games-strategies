@@ -3,7 +3,7 @@ from Strategie import Strategie
 from CoupMorpion import CoupMorpion
 
 
-class StartegieMinMax(Strategie):
+class StrategieMinMax(Strategie):
     """
     Represente une strategie utilisant un arbre min-max de profondeur k
     """

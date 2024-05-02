@@ -10,9 +10,9 @@ class StrategieAleatoire(Strategie):
     def __init__(self, jeu: JeuSequentiel):
         super().__init__(jeu)
 
-    def choisirProchainCoup(self):
+    def choisirProchainCoup(self, C):
         """
         Choisit un coup aleatoire suivant une distribution uniforme sur tous les coups possibles
         dans la configuration C
         """
-        return random.choice(self.jeu.configuration.coupsPossibles())
+        return random.choice(C.coupsPossibles())

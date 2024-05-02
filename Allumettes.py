@@ -1,3 +1,4 @@
+from Graph import Graph
 from JeuSequentiel import JeuSequentiel
 
 class Allumettes(JeuSequentiel):
@@ -48,7 +49,7 @@ class Allumettes(JeuSequentiel):
         st.__init__(self, *args)
 
         print("debut")
-
+        
         while not(self.estFinale(C)):
            
             coup = st.choisirProchainCoup(C)
