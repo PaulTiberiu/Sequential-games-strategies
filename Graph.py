@@ -270,7 +270,9 @@ def test_graph():
     print("Valeur de E[Vertex(1)]:", group_graphs[0].E.get(Vertex(1).id))
 
     print("Valeur de E:", group_graphs[1].E)
-    print("Valeur de E[Vertex(2)]:", group_graphs[1].E[Vertex(2).id])
+
+
+    print("Valeur de E[Vertex(2)]:", group_graphs[1].E.get(Vertex(2).id))
 
     print("Valeur de E[Vertex(2)]:", group_graphs[1].E.get(Vertex(2).id))
 
