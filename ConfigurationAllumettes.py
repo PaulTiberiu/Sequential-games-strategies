@@ -1,5 +1,6 @@
 from Configuration import Configuration
 from copy import deepcopy
+from CoupAllumettes import CoupAllumettes
 
 class ConfigurationAllumettes(Configuration):
 
@@ -11,6 +12,12 @@ class ConfigurationAllumettes(Configuration):
     def __repr__(self):
         return ' | '.join([str(groupe) for groupe in self.groupes])
 
+    def __eq__(self, other) -> bool:
+        return self.groupes == other.groupes
+    
+    def __hash__(self) -> int:
+        return hash(tuple(self.groupes))
+    
     def prochainJoueur(self):
         if self.historique == [] or self.getDernierCoup().get_joueur() == 2:
             return 1
@@ -27,12 +34,12 @@ class ConfigurationAllumettes(Configuration):
             if groupe > 0:
                 # Pour chaque groupe restant, les coups possibles sont de retirer 1 a groupe jusqu'a 0
                 for j in range(1, groupe + 1):
-                    coups.append((i, j)) # (indice du groupe, nb d'allumettes a retirer)
+                    coups.append(CoupAllumettes(self.prochainJoueur(), j, i)) # (indice du groupe, nb d'allumettes a retirer)
 
         return coups
     
     def f1(self):
-        raise NotImplementedError
+        pass
 
     def joueLeCoup(self, coup):
         """
@@ -40,6 +47,10 @@ class ConfigurationAllumettes(Configuration):
         """
         groupe, nb_allumettes = coup.position(), coup.get_count()
         self.groupes[groupe] -= nb_allumettes
+        
+        
+        self.historique.append(coup)
+        
         return self.groupes
         
     def prochaine_configuration(self, coup):
