@@ -1,7 +1,6 @@
 from Configuration import Configuration
 from copy import deepcopy
 from CoupAllumettes import CoupAllumettes
-from Graph import Graph
 
 class ConfigurationAllumettes(Configuration):
 
@@ -41,6 +40,8 @@ class ConfigurationAllumettes(Configuration):
                     coups.append(CoupAllumettes(self.prochainJoueur(), j, i)) # (indice du groupe, nb d'allumettes a retirer)
 
         return coups
+    
+    
 
     # def coupsPossibles(self):
     #     """
