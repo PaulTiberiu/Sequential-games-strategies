@@ -43,13 +43,15 @@ class Graph:
 
     def printEdges(self):
         ret = ""
-        for k, v in self.E.items():
-            ret = ret + str(k) + " -> " + str(v) +'\n'
+        for k, v in sorted(self.E.items()):
+            ret = ret + str(k) + "  ->  " + str(v) +'\n'
         return ret
 
     def grundys(self):
         return '\n'.join([ str(v) for v in self.V])
 
+    def grundys_eq(self, val):
+        return '\n'.join([ str(v) for v in self.V if v.grundy == val])
     def insert_vertex(self, v):
         self.V.add(v)
 
@@ -261,8 +263,13 @@ def test_allu():
 
     t = ConfigurationAllumettes([1, 3, 5], 3)
     
-    for sui in g.E[t]:
-        print(str(sui) + " ; " + str(g.grundyOf(sui)))
+    print(g.printEdges())
+    # for v in range(5):
+    #     print("-----------------------------------------------------------------")
+    #     print("-----------------------------------------------------------------")
+    #     print("-----------------------------------------------------------------")
+
+    #     print(g.grundys_eq(v))
 
 
 

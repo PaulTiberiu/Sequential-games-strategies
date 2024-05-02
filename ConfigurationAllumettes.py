@@ -18,6 +18,9 @@ class ConfigurationAllumettes(Configuration):
     def __hash__(self) -> int:
         return hash(tuple(self.groupes))
     
+    def __lt__(self, other):
+        return sorted(self.groupes) < sorted(other.groupes)
+    
     def prochainJoueur(self):
         if self.historique == [] or self.getDernierCoup().get_joueur() == 2:
             return 1
