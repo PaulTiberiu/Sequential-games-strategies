@@ -1,3 +1,4 @@
+import itertools
 from Vertex import Vertex
 from ConfigurationAllumettes import ConfigurationAllumettes
 from CoupAllumettes import CoupAllumettes
@@ -14,7 +15,11 @@ class Graph:
         self.V = V
         self.grundy = None
         if(E == None):
-            self.E = {i.id : set() for i in V} # Creer le dictionnaire qui relie le sommet i a vide
+            if type(next(iter(V))) == Vertex:
+                self.E = {i.id : set() for i in V}
+            else :
+                if type(next(iter(V))) == tuple:
+                    self.E = {((j.id) for j in i) : set() for i in V} # Creer le dictionnaire qui relie le sommet i a vide
         else:
             self.E = E
 
@@ -122,81 +127,109 @@ class Graph:
 
 
     @staticmethod
-    def cartesian_sum(G1, G2):
-        X = set()
-        for vertex1 in G1.V:
-            #print("Vertex1:", vertex1.id)
-            #print("G1.E:", G1.E[vertex1.id])
+    def cartesian_sum(first ,second):
+        vertexes = set()
+        edges = {}
+        
+        hasTuples = False
 
-            for vertex2 in G2.V:
-                new_vertex_id = str(vertex1.id) + "-" + str(vertex2.id)
-                X.add(Vertex(new_vertex_id))
+        for vertex1 in first.V:
+            for vertex2 in second.V:
+                if type(vertex1) == tuple:
+                    new_vertex = (*vertex1, vertex2)
+                    hasTuples = True  
+                else:
+                    new_vertex = (vertex1, vertex2)
+                vertexes.add(new_vertex)
+        
 
-        L = dict()
-        for vertex1 in G1.V:
-            for vertex2 in G2.V:
-                key = str(vertex1.id) + "-" + str(vertex2.id)
-                L[key] = set()
+        for v in vertexes:
+            edges[v] = set()
 
-        print("X:", X)
-        print("L:", L)
+        for v in vertexes:
+            if hasTuples:  
+                firstSource = v[:-1]
 
-        print("G1.V:", G1.V)
-        print("G2.V:", G2.V)
+                secondSource = v[-1].id
+                
+                for desc in first.E[firstSource]:
+                    new_desc = (*desc, secondSource)
+                    edges[v].add( new_desc )
 
-        print("G1.E:", G1.E)
-        print("G1.E:", G1.E[1])
-        print("G2.E:", G2.E)
+                for desc in second.E[secondSource]:
+                    new_desc = (*firstSource, desc)
+                    edges[v].add( new_desc )
 
-        for vertex in X:
-            vertex1_id, vertex2_id = vertex.id.split("-")
-            print("Vertex1:", vertex1_id, " Vertex2:", vertex2_id)
+  
+            else:
+                firstSource = v[0].id   
+                secondSource = v[1].id
 
-            print("G1.E:", G1.E[int(vertex1_id)])
+                for desc in first.E[firstSource]:
+                    new_desc = (desc, secondSource)
+                    edges[v].add( new_desc )
 
-            for child1 in G1.E[vertex1_id]:
-                #print("Child1:", child1)
-                L[vertex.id].add(child1 + "-" + vertex2_id)
+                for desc in second.E[secondSource]:
+                    new_desc = (firstSource, desc)
+                    edges[v].add( new_desc )
 
-            for child2 in G2.E[vertex2_id]:
-                #print("Child2:", child2)
-                L[vertex.id].add(vertex1_id + "-" + child2)
+        return Graph(vertexes, edges)
 
-        G = Graph(X, L)
-        return G
-    
+
     @staticmethod
-    def digital_sum(p, q):
-        # Convertir p et q en binaire
-        p_binary = bin(p)[2:]
-        q_binary = bin(q)[2:]
+    def digital_sum(numbers):
+        # Convertir chaque nombre en binaire et les stocker dans une liste
+        binary_numbers = [bin(num)[2:].zfill(len(bin(max(numbers)))) for num in numbers]
 
-        # Avoir la meme longueur pour faire la somme bit a bit
-        max_length = max(len(p_binary), len(q_binary))
-        p_binary = p_binary.zfill(max_length)
-        q_binary = q_binary.zfill(max_length)
+        # Obtenir la longueur maximale des nombres binaires
+        max_length = len(max(binary_numbers, key=len))
+
+        # Ajuster la longueur de chaque nombre binaire pour qu'ils aient la même longueur
+        binary_numbers = [binary.ljust(max_length, '0') for binary in binary_numbers]
 
         # Calculer la somme digitale
-        digital_sum = int(p_binary, 2) ^ int(q_binary, 2)
+        result = 0
+        for binary in binary_numbers:
+            result ^= int(binary, 2)
 
-        return digital_sum
+        return result
     
-    # @staticmethod
-    # def create_game_graph(tab_m, conf):
-    #     group_graphs = Graph.create_group_graphs(tab_m)
+    def all_digital_sums(self):
+        ret = []
+        for vertex in self.V:
+            if type(vertex) == tuple:
+                maped = map(lambda v : v.grundy, vertex)
+                ret.append(   Graph.digital_sum(list(maped)) )
+            else :
+                ret.append(vertex.grundy)
 
-    #     print("Group Graphs:", group_graphs)
+        return ret
+    
+    @staticmethod
+    def digital_sum_of(vertexes):
+        if type(vertexes) == tuple:
+            maped = map(lambda v : v.grundy, vertexes)
+            return  Graph.digital_sum(list(maped))
+        else :
+            return vertexes.grundy
 
-    #     game_graph = group_graphs[0]
-    #     grundy_game_graph = game_graph.grundyOf(conf)
 
-    #     for graph in group_graphs[1:]:
-            
-    #         grundy_graph = graph.grundyOf(graph, conf)
-    #         game_graph = Graph.cartesian_sum(graph, game_graph)
-    #         grundy_game_graph = Graph.digital_sum(grundy_game_graph, grundy_graph)
+    @staticmethod
+    def final_graph(product):
         
-    #     return game_graph
+        vertexes = set()
+        edges = {}
+        for v in product.V:
+            nv = Vertex(v)
+            vertexes.add(nv)
+            nv.setGrundy(Graph.digital_sum_of(v))
+            edges[v] = set()
+
+            for ed in product.E[v]:
+                edges[v].add(ed)
+
+        return Graph(vertexes, edges)
+        
 
     @staticmethod
     def create_group_graphs(tab_m):
@@ -207,94 +240,38 @@ class Graph:
             group_graphs.append(graph)
         return group_graphs
     
-def create_g():
-    init = [1, 2, 3]
-    ca = ConfigurationAllumettes(init, len(init))
 
-    edges = {}
-    edges[ca] = set()
-    vertexes = set([Vertex(ca)])
+    def getGrundyMulti(self, config):
 
-    fc(ca, vertexes, edges)
+        for vertex in self.V:
 
-    g = Graph(vertexes, edges)
-    return g
-
-
-def fc(conf, vertexes, edges):
-
-    if edges.get(conf) == None:
-        edges[conf] = set()
-
-    for c in conf.coupsPossibles():
-        new = conf.prochaine_configuration(c)
-        if not new.estFinale():
-            v = Vertex(new)
-
-            vertexes.add(v)
-
-            edges[conf].add(new)
-            fc(new, vertexes, edges)
+            mapped = map(lambda vert : vert.id.groupes[0], vertex.id)
+            consum = list(mapped)
+            
+    
+            conf = ConfigurationAllumettes(consum, len(consum))
+                        
+            if config == conf:
+                return vertex.grundy
+        
+        raise ValueError("iiiiii")
 
 
 
-def test_allu():
-    g = create_g()
+    
+def test_allumettes():
+    tab_m = [1, 3, 5]
+    group_graphs = Graph.create_group_graphs(tab_m)
 
-    for v in range(5):
-        print("-----------------------------------------------------------------")
-        print("-----------------------------------------------------------------")
-        print("-----------------------------------------------------------------")
+    product = group_graphs[0]
 
-        print(g.grundys_eq(v))
+    for i in range(1, len(group_graphs)):
+        product = Graph.cartesian_sum(product, group_graphs[i])
+    
+    final = Graph.final_graph(product)
+    print(final.E)
 
-def test_graph():
-    init = [1, 2, 3]
-    #ca = ConfigurationAllumettes(init, len(init))
-    # print("Configuration:", ca)
+    print("")
+    print(final.grundys())
 
-    group_graphs = Graph.create_group_graphs(init)
-
-    # print(group_graphs[0].getEdges())
-    # print(group_graphs[1].getEdges())
-    # print(group_graphs[2].getEdges())
-
-    print("Valeur de E:", group_graphs[0].E)
-
-    if group_graphs[0].E:
-        print("Type de la première clé de E:", type(next(iter(group_graphs[0].E.keys()))))
-    else:
-        print("Le dictionnaire est vide.")
-
-
-    print("Valeur de E[Vertex(1)]:", group_graphs[0].E.get(ConfigurationAllumettes([1], 1)))
-
-    print("Valeur de E:", group_graphs[1].E)
-
-
-    print("Valeur de E[Vertex(2)]:", group_graphs[1].E.get(ConfigurationAllumettes([2], 1)))
-
-    print("Valeur de E[Vertex(2)]:", group_graphs[2].E.get(ConfigurationAllumettes([3], 1)))
-
-
-
-    #print(group_graphs[0].E[1])
-
-    #g = Graph.cartesian_sum(group_graphs[0], group_graphs[1])
-    #g1 = Graph.cartesian_sum(g, group_graphs[2])
-
-
-
-
-    # print("Configuration:", ca.groupes[0])
-
-    # g1 = Graph.create_graph(ca.groupes[0])
-    # g2 = Graph.create_graph(ca.groupes[1])
-    # g3 = Graph.create_graph(ca.groupes[2])
-
-    # print("G1:", g1.getEdges())
-    # print("G2:", g2.getEdges())
-    # print("G3:", g3.getEdges())
-
-test_graph()
-
+#test_allumettes()

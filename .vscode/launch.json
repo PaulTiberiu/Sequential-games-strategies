@@ -9,12 +9,12 @@
             "program": "${workspaceFolder}/PartieAllumettes.py"
         },
 
-        {
-            "name": "Debug",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/Graph.py"
-        }
+        // {
+        //     "name": "Debug",
+        //     "type": "debugpy",
+        //     "request": "launch",
+        //     "program": "${workspaceFolder}/Graph.py"
+        // }
 
     ]
 } 

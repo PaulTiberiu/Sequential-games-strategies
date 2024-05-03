@@ -41,8 +41,6 @@ class ConfigurationAllumettes(Configuration):
 
         return coups
     
-    
-
     # def coupsPossibles(self):
     #     """
     #     Renvoie la liste des coups possibles dans la configuration C

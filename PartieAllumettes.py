@@ -3,7 +3,7 @@ from StrategieGrundy import StrategieGrundy
 from ConfigurationAllumettes import ConfigurationAllumettes
 from CoupAllumettes import CoupAllumettes
 from StrategieMinMax import StrategieMinMax
-
+from StrategieGrundyOpti import StrategieGrundyOpti
 
 
 
@@ -38,7 +38,7 @@ def test_coups_2():
     cg = ConfigurationAllumettes([3, 4, 5], 3)
    
 
-    partie.jouerPartie(cg, StrategieGrundy, cg)
+    partie.jouerPartie(cg, StrategieGrundyOpti)
 
 
 # def test_coups_3():
@@ -53,4 +53,4 @@ def test_coups_2():
 #     partie.jouerPartie(cg, StartegieMinMax, 100)
 
 
-test_coups_1()
+test_coups_2()

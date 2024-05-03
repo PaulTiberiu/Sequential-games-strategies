@@ -15,5 +15,8 @@ class Vertex:
     def __eq__(self, other) -> bool:
         return self.id == other.id
     
+    def __lt__(self, other):
+        return self.id < other.id
+    
     def __hash__(self) -> int:
         return hash(self.id)
