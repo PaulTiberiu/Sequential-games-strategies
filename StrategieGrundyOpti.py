@@ -5,27 +5,33 @@ from random import choice
 
 from Graph import Graph
 
+from ConfigurationAllumettes import ConfigurationAllumettes
+
 class StrategieGrundyOpti(Strategie):
 
 
-    def __init__(self, jeu: JeuSequentiel):
+    def __init__(self, jeu: JeuSequentiel, arg):
         self.jeu = jeu
 
     def choisirProchainCoup(self, C):
         coups = []
-        
+        zeros= []
+        graph = self.compute_graph(C)
+
         for coup in C.coupsPossibles():
             config = C.prochaine_configuration(coup)
 
             if not config.estFinale():
-                graph = self.compute_graph(config)
+                
                 grundy = graph.getGrundyMulti(config)
-
+                #print(coup, " grundy coup = ", grundy)
                 if grundy == 0:
-                    return coup
+                    zeros.append(coup)
         
             coups.append(coup)
         
+        if zeros:
+            return choice(zeros)
         return choice(coups)
     
     def compute_graph(self, C):

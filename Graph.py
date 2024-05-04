@@ -96,34 +96,45 @@ class Graph:
         vertex.setGrundy(grundy)
 
     @staticmethod
-    def create_graph(configuration):
+    def create_graph(configuration, zeros = False):
 
         edges = {}
         edges[configuration] = set()
         vertexes = set([Vertex(configuration)])
 
-        Graph.complete_graph(configuration, vertexes, edges)
+        Graph.complete_graph(configuration, vertexes, edges, zeros)
         g = Graph(vertexes, edges)
 
         g.compute_all_grundys()
         return g
 
+    
     @staticmethod
-    def complete_graph(conf, vertexes, edges):
+    def complete_graph(conf, vertexes, edges, zeros = False):
 
         if edges.get(conf) == None:
             edges[conf] = set()
 
         for c in conf.coupsPossibles():
             new = conf.prochaine_configuration(c)
-            if not new.estFinale():
+            if zeros:
                 v = Vertex(new)
 
                 vertexes.add(v)
 
                 
                 edges[conf].add(new)
-                Graph.complete_graph(new, vertexes, edges)
+                Graph.complete_graph(new, vertexes, edges, zeros)
+            
+            else :
+                if not new.estFinale():
+                    v = Vertex(new)
+
+                    vertexes.add(v)
+
+                    
+                    edges[conf].add(new)
+                    Graph.complete_graph(new, vertexes, edges, zeros)
 
 
     @staticmethod
@@ -231,12 +242,15 @@ class Graph:
         return Graph(vertexes, edges)
         
 
+
+
+        
     @staticmethod
     def create_group_graphs(tab_m):
         group_graphs = []
         for groupe in tab_m:
             config = ConfigurationAllumettes([groupe], 1)
-            graph = Graph.create_graph(config)
+            graph = Graph.create_graph(config, zeros = True)
             group_graphs.append(graph)
         return group_graphs
     
@@ -260,8 +274,13 @@ class Graph:
 
     
 def test_allumettes():
-    tab_m = [1, 3, 5]
+    tab_m = [1, 2, 1]
     group_graphs = Graph.create_group_graphs(tab_m)
+
+    # print("Group Graphs")
+    # for g in group_graphs:
+    #     print(g.getEdges())
+    #     print("")
 
     product = group_graphs[0]
 
@@ -272,6 +291,7 @@ def test_allumettes():
     print(final.E)
 
     print("")
-    print(final.grundys())
+    #print(final.grundys())
 
 #test_allumettes()
+

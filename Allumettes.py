@@ -48,20 +48,20 @@ class Allumettes(JeuSequentiel):
         st = strategie.__new__(strategie)
         st.__init__(self, *args)
 
-        print("debut")
+       # print("debut")
         
         while not(self.estFinale(C)):
            
             coup = st.choisirProchainCoup(C)
 
-            print("Coup : ", coup)
+            #print("Coup : ", coup)
             self.joueLeCoup(C, coup)
-            print(C)
+           # print(C)
 
             if self.estFinale(C) : break
         
             coup = st.choisirProchainCoup(C)
             self.joueLeCoup(C, coup)
 
-            print("Coup : ", coup)
-            print(C)
+          #  print("Coup : ", coup)
+          #  print(C)
