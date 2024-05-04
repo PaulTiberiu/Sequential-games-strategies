@@ -10,7 +10,7 @@ from ConfigurationAllumettes import ConfigurationAllumettes
 class StrategieGrundyOpti(Strategie):
 
 
-    def __init__(self, jeu: JeuSequentiel, arg):
+    def __init__(self, jeu: JeuSequentiel):
         self.jeu = jeu
 
     def choisirProchainCoup(self, C):
@@ -46,4 +46,5 @@ class StrategieGrundyOpti(Strategie):
         final = Graph.final_graph(product)
 
         return final
+
 

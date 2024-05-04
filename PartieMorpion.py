@@ -1,6 +1,6 @@
 from Morpion import Morpion
 from StrategieAleatoire import StrategieAleatoire
-from StrategieMinMax import StartegieMinMax
+from StrategieMinMax import StrategieMinMax
 from ConfigurationMorpion import ConfigurationMorpion
 from CoupMorpion import CoupMorpion
 
@@ -11,7 +11,7 @@ def test_coups_1():
 
 
     cg = ConfigurationMorpion()
-    cg.jouer_coup(CoupMorpion(1, 0, 0))
+    #cg.jouer_coup(CoupMorpion(1, 0, 0))
 
     # cg.jouer_coup(CoupMorpion(2, 2, 2))
     # cg.jouer_coup(CoupMorpion(1, 2, 0))
@@ -25,7 +25,7 @@ def test_coups_1():
     # cg.jouer_coup(CoupMorpion(2, 0, 1))
 
 
-    partie.jouerPartie(cg, StartegieMinMax, 10)
+    partie.jouerPartie(cg, StrategieMinMax, 10)
 
 def test_coups_2():
     """rotation a 45° fait apparaitre un probleme"""
@@ -42,7 +42,7 @@ def test_coups_2():
     cg.jouer_coup(CoupMorpion(1, 1, 0))
     cg.jouer_coup(CoupMorpion(2, 1, 2))
 
-    partie.jouerPartie(cg, StartegieMinMax, 10)
+    partie.jouerPartie(cg, StrategieMinMax, 10)
 
 
 def test_coups_3():
@@ -54,7 +54,7 @@ def test_coups_3():
     cg.jouer_coup(CoupMorpion(1, 1, 1))
     cg.jouer_coup(CoupMorpion(2, 0, 2))
     cg.jouer_coup(CoupMorpion(1, 0, 1))
-    partie.jouerPartie(cg, StartegieMinMax, 10)
+    partie.jouerPartie(cg, StrategieMinMax, 10)
 
 
 test_coups_1()

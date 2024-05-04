@@ -2,19 +2,26 @@
     "configurations": [
 
 
-        {
-            "name": "Python Debugger: Python File",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "${workspaceFolder}/PartieAllumettes.py"
-        },
+        // {
+        //     "name": "Python Debugger: Python File",
+        //     "type": "debugpy",
+        //     "request": "launch",
+        //     "program": "${workspaceFolder}/PartieAllumettes.py"
+        // },
 
         // {
         //     "name": "Debug",
         //     "type": "debugpy",
         //     "request": "launch",
         //     "program": "${workspaceFolder}/Graph.py"
-        // }
+        // },
+
+        {
+            "name": "Debug",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/projet.py"
+        }
 
     ]
 } 

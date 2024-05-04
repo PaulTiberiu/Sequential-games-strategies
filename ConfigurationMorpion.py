@@ -74,81 +74,81 @@ class ConfigurationMorpion(Configuration):
         else:
             return 0 # Match nul
         
-    def lignesPotentielles(self, C, symbole):
-        """
-        Renvoie 2 listes des lignes potentielles
-        """
-        lignes10 = []
-        lignes1=[]
-        for i in range (3):
-            ligne = [C[i][0], C[i][1], C[i][2]]
-            if ligne.count(symbole) == 2 and ligne.count(None) == 1:
-                lignes10.append(ligne)
-            if ligne.count(symbole) == 1 and ligne.count(None) == 2:
-                lignes1.append(ligne)
-        return lignes10, lignes1
+    # def lignesPotentielles(self, C, symbole):
+    #     """
+    #     Renvoie 2 listes des lignes potentielles
+    #     """
+    #     lignes10 = []
+    #     lignes1=[]
+    #     for i in range (3):
+    #         ligne = [C[i][0], C[i][1], C[i][2]]
+    #         if ligne.count(symbole) == 2 and ligne.count(None) == 1:
+    #             lignes10.append(ligne)
+    #         if ligne.count(symbole) == 1 and ligne.count(None) == 2:
+    #             lignes1.append(ligne)
+    #     return lignes10, lignes1
     
-    def colonnesPotentielles(self, C, symbole):
-        """
-        Renvoie 2 listes des colonnes potentielles
-        """
-        colonnes10 = []
-        colonnes1=[]
-        for i in range (3):
-            colonne = [C[0][i], C[1][i], C[2][i]]
-            if colonne.count(symbole) == 2 and colonne.count(None) == 1:
-                colonnes10.append(colonne)
-            if colonne.count(symbole) == 1 and colonne.count(None) == 2:
-                colonnes1.append(colonne)
-        return colonnes10, colonnes1
+    # def colonnesPotentielles(self, C, symbole):
+    #     """
+    #     Renvoie 2 listes des colonnes potentielles
+    #     """
+    #     colonnes10 = []
+    #     colonnes1=[]
+    #     for i in range (3):
+    #         colonne = [C[0][i], C[1][i], C[2][i]]
+    #         if colonne.count(symbole) == 2 and colonne.count(None) == 1:
+    #             colonnes10.append(colonne)
+    #         if colonne.count(symbole) == 1 and colonne.count(None) == 2:
+    #             colonnes1.append(colonne)
+    #     return colonnes10, colonnes1
     
-    def diagonalesPotentielles(self, C, symbole):
-        """
-        Renvoie 2 listes des diagonales potentielles
-        """
-        diagonales10 = []
-        diagonales1 = []
+    # def diagonalesPotentielles(self, C, symbole):
+    #     """
+    #     Renvoie 2 listes des diagonales potentielles
+    #     """
+    #     diagonales10 = []
+    #     diagonales1 = []
 
-        diag_principale = [C[0][0], C[1][1], C[2][2]]
-        if diag_principale.count(symbole) == 2 and diag_principale.count(None) == 1:
-            diagonales10.append(diag_principale)
-        if diag_principale.count(symbole) == 1 and diag_principale.count(None) == 2:
-            diagonales1.append(diag_principale)
+    #     diag_principale = [C[0][0], C[1][1], C[2][2]]
+    #     if diag_principale.count(symbole) == 2 and diag_principale.count(None) == 1:
+    #         diagonales10.append(diag_principale)
+    #     if diag_principale.count(symbole) == 1 and diag_principale.count(None) == 2:
+    #         diagonales1.append(diag_principale)
         
-        diag_secondaire = [C[0][2], C[1][1], C[2][0]]
-        if diag_secondaire.count(symbole) == 2 and diag_secondaire.count(None) == 1:
-            diagonales10.append(diag_secondaire)
-        if diag_secondaire.count(symbole) == 1 and diag_secondaire.count(None) == 2:
-            diagonales1.append(diag_secondaire)
+    #     diag_secondaire = [C[0][2], C[1][1], C[2][0]]
+    #     if diag_secondaire.count(symbole) == 2 and diag_secondaire.count(None) == 1:
+    #         diagonales10.append(diag_secondaire)
+    #     if diag_secondaire.count(symbole) == 1 and diag_secondaire.count(None) == 2:
+    #         diagonales1.append(diag_secondaire)
 
-        return diagonales10, diagonales1
+    #     return diagonales10, diagonales1
         
-    def f1(self):
-        score = 0
+    # def f1(self):
+    #     score = 0
 
-        if self.estGagnant(1):
-            score += 100
+    #     if self.estGagnant(1):
+    #         score += 100
             
-        # if self.estGagnant(2):
-        #     score -= 100
+    #     # if self.estGagnant(2):
+    #     #     score -= 100
 
-        lignes10, lignes1 = self.lignesPotentielles(self.grille, 1)
-        colonnes10, colonnes1 = self.colonnesPotentielles(self.grille, 1)
-        diagonales10, diagonales1 = self.diagonalesPotentielles(self.grille, 1)
+    #     lignes10, lignes1 = self.lignesPotentielles(self.grille, 1)
+    #     colonnes10, colonnes1 = self.colonnesPotentielles(self.grille, 1)
+    #     diagonales10, diagonales1 = self.diagonalesPotentielles(self.grille, 1)
 
-        # print("lignes10 ", lignes10)
-        # print("lignes1 ", lignes1)
-        # print("colonnes10 ", colonnes10)
-        # print("colonnes1 ", colonnes1)  
-        # print("diagonales10 ", diagonales10)    
-        # print("diagonales1 ", diagonales1)  
+    #     # print("lignes10 ", lignes10)
+    #     # print("lignes1 ", lignes1)
+    #     # print("colonnes10 ", colonnes10)
+    #     # print("colonnes1 ", colonnes1)  
+    #     # print("diagonales10 ", diagonales10)    
+    #     # print("diagonales1 ", diagonales1)  
         
-        score += len(lignes10) * 10 + len(lignes1)
-        score += len(colonnes10) * 10 + len(colonnes1)
-        score += len(diagonales10) * 10 + len(diagonales1)
+    #     score += len(lignes10) * 10 + len(lignes1)
+    #     score += len(colonnes10) * 10 + len(colonnes1)
+    #     score += len(diagonales10) * 10 + len(diagonales1)
 
         # print("score ", score)
-        return score
+        # return score
     
     # def f1_ntu_line(self, row1, col1, row2, col2,  row3, col3):
     #     score = 0
