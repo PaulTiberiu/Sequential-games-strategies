@@ -937,9 +937,6 @@ def comparaison_methodes_Allu(loops, cols, maxallu, profondeur):
         args = [None, profondeur, copies[2], None]
         
         times[cg] = {}
-        
-        print("conf  ", cg)
-
 
         for idx, strat in enumerate(strats):
             times[cg][strat] = {}
